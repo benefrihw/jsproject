@@ -1,31 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<style>
-.backPaper{
-    width: 100%;
-    background-color: rgb(206, 255, 160);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Best Movie Collection</title>
+  </head>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Jua&display=swap");
+    * .backPaper {
+      width: 100%;
+      height: 100%;
+      background-color: rgb(206, 255, 160);
+      }
+
+    .titleName {
+      width: 100%;
+      height: 5%;
+      font-family: "Bagel Fat One", system-ui;
+      font-size: 100px;
+      text-align: center;
+      /* background-color: green; */
+    }
+
+    .searchMovie {
+      width: 100%;
+      height: 1.5%;
+      font-family: "Jua", sans-serif;
+      text-align: center;
+      align-items: center;
+      font-size: 20px;
+      background-color: orange;
+    }
+
+    .underLine {
+      width: 100%;
+      height: 0.5%;
+      background-color: black;
+    }
+
+    .mvBox1 {
+      background-color: blue;
+      width: 300px;
+      height: 700px;
+      border: 5px solid #000;
+      border-radius: 3%;
+      align-items: center;
+      float: left;
+      margin: 5%;
+      
+    }
+
+    .mvBox2 {
+      background-color: blue;
+      width: 300px;
+      height: 700px;
+      border: 5px solid #000;
+      border-radius: 3%;
+      align-items: center;
+      float: left;
+      margin: 5%;
+    }
+
+    .mvBox3 {
+      background-color: blue;
+      width: 300px;
+      height: 700px;
+      border: 5px solid #000;
+      border-radius: 3%;
+      align-items: center;
+      float: left;
+      margin: 5%;
+    }
+
+    .mvImg {
+      width: 250px;
+      height: 400px;
+      border-radius: 3%;
+      object-fit: fill;
+      margin: 8%;
+    }
+  </style>
+  
+    <div class="backPaper">
+      <div class="titleName">Best Movie Collection</div>
+      <div class="searchMovie">
+        찾고싶은 영화를 검색해보세요! &nbsp
+        <input
+          type="text"
+          style="width: 200px; height: 30px"
+          placeholder="영화 제목을 입력하세요!"
+        />
+        <button
+        id="searchBtn"
+          type="button"
+          style="height: 35px"
+          class="btn btn-secondary btn-lg"
+        >
+          검색
+        </button>
+      </div>
+      <p></p>
+      <div id="mvList">
+      </div>
+      <div>
+       </div>
+       <section id="topList"></section>
+    <script>
+      const options = {
+  method: "GET",
+  headers: {
+    accept: "application/json",
+    Authorization:
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjOGM3NTYxOWRkMjQ4MmRlYmEzYWQ3ODM2OTM0NjJmNSIsInN1YiI6IjY2MmI0MTdiOWFjNTM1MDExYjhmMWYxYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1EKSwKqu2zDrXF8KNluLjyFHsVHo_4Tzpqz0s0B3WnE",
+  },
+};
+
+const searchBtnDOM = document.getElementById("searchBtn");
+const topList = document.getElementById("topList");
+
+function topMovies() {
+  fetch(
+    "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
+    options
+  )
+    .then((response) => response.json())
+    .then(listMovies)
+    .catch((err) => console.error(err));
 }
-</style>
 
-<script>
-
-</script>
-
-<body>
-    <div class = "backPaper">
-        <div class = "titleName">베스트 무비 컬렉션</div>
-    <div class = "searchTop">영화를 검색하세요</div>
-    <div class = "searchInput">
-        <input type = "text" placeholder="영화 제목을 입력하세요">
-        <button type="button" class="btn btn-secondary btn-lg">검색</button>
-        <div class = "poster">이곳은 영화 포스터가 들어갑니다</div>
+function listMovies(data) {
+  data.results.forEach((element) => {
+    topList.innerHTML += `
+    <div class = "mvPoster">
+    <img src = https://image.tmdb.org/t/p/w300/${element.poster_path}.jpg>
+    <div class = "mvTItle">
+    <p>${element.title}</p>
+    <div class = "mvOverview">
+    <p>${element.overview}</p>
+    <div class = "mvAverage">
+    <p>Rate: ${element.vote_average}</p>
     </div>
-    
     </div>
-</body>
+    </div>
+    </div>   
+    `;
+  });
+}
+
+topMovies();
+
+    </script>
+
 </html>
