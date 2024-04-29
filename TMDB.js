@@ -7,8 +7,8 @@ const options = {
   },
 };
 
-const searchBtnDOM = document.getElementById("searchBtn");
-const topList = document.getElementById("topList");
+// const searchBtnDOM = document.getElementById("searchBtn");
+// const topList = document.getElementById("topList");
 
 function topMovies() {
   fetch(
